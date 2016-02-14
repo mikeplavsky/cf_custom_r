@@ -18,7 +18,7 @@ let responseBody = JSON.stringify({
 
 });
 
-console.log(responseBody)
+console.log(responseBody);
 
 let https = require("https");
 let url = require("url");
@@ -34,7 +34,9 @@ let options = {
         "content-type": "",
         "content-length": responseBody.length
     }
-}
+};
+
+console.log(options);
 
 let request = https.request(options, (response)=>{
 
@@ -49,5 +51,7 @@ let request = https.request(options, (response)=>{
 request.on("error", (error)=>{
     console.log(
             `send(..) failed executing https.request(..): ${error}`);
-})
+});
 
+request.write(responseBody);
+request.end();
