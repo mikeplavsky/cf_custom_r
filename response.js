@@ -19,4 +19,35 @@ let responseBody = JSON.stringify({
 });
 
 console.log(responseBody)
-console.log("Done!")
+
+let https = require("https");
+let url = require("url");
+
+let parsedUrl = url.parse(evt.ResponseURL);
+
+let options = {
+    hostname: parsedUrl.hostname,
+    port: 443,
+    path: parsedUrl.path,
+    method: "PUT",
+    headers: {
+        "content-type": "",
+        "content-length": responseBody.length
+    }
+}
+
+let request = https.request(options, (response)=>{
+
+    console.log(
+            `Status code: ${response.statusCode}`);
+
+    console.log(
+            `Status message: ${response.statusMessage}`);
+
+});
+
+request.on("error", (error)=>{
+    console.log(
+            `send(..) failed executing https.request(..): ${error}`);
+})
+
